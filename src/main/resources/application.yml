@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: kafkaProducer
+netty:
+  default:
+    allocator:
+      max-order: 3

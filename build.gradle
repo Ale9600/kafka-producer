@@ -1,0 +1,50 @@
+plugins {
+    id("groovy") 
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.7.0"
+    id("io.micronaut.test-resources") version "3.7.0"
+}
+
+version = "0.1"
+group = "com.ulink.kafka.producer"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.groovy:micronaut-runtime-groovy")
+    implementation("io.micronaut.kafka:micronaut-kafka")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    compileOnly("io.micronaut:micronaut-http-validation")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
+
+}
+
+
+application {
+    mainClass.set("com.ulink.kafka.producer.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.ulink.kafka.producer.*")
+    }
+    testResources {
+        sharedServer = true
+    }
+}
+
+
+
